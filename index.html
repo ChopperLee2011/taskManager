@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="TODO">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple-Todolist</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="author" href="humans.txt">
+        <style>
+        	.done{
+        		text-decoration: line-through;
+        		color:#ccc;
+        	}
+        </style>
+    </head>
+    <body>
+    	<h1> ToDO List</h1>
+    	<div ng-controller="todoCtl">
+    		<form name="addFrm" ng-submit="addnewTodo()">
+    			<input type="textbox" value="" placeholder="input new to do " ng-model="newTodo" required >
+    			<button ng-disabled="addFrm.$invalid">Go</button>
+    		</form>
+    		<button ng-click="clearDone()">Clear Done</button>
+    		<ul>
+    			<li ng-repeat="todo in todos">
+    				<input type="checkbox" value="" ng-model="todo.done">
+    				<span ng-class="{'done':todo.done}">
+    					{{ todo.title }}
+    				</span>
+    			</li>
+    		</ul>
+    	</div>
+		
+        <script src="./lib/angular.js"></script>
+        <script>
+        /**
+        *  Module
+        *
+        * Description
+        */
+        angular.module('TODO', []).controller('todoCtl', ['$scope', function($scope){
+        	$scope.todos=[
+        		{'title':'Build a todo app','done':false,'time':new Date()}
+        	];
+        	$scope.addnewTodo = function(){
+        		$scope.todos.push({'title':$scope.newTodo,'done':false,'time':new Date()});
+        		$scope.newTodo='';
+        	};
+        	$scope.clearDone = function(){
+        		$scope.todos = $scope.todos.filter(function(todo){
+        			return 	!todo.done;
+        		});
+        	};
+        }])
+        </script>
+    </body>
+</html>
