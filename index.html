@@ -1,58 +1,126 @@
 <!doctype html>
 <html ng-app="TODO">
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Simple-Todolist</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="author" href="humans.txt">
-        <style>
-        	.done{
-        		text-decoration: line-through;
-        		color:#ccc;
-        	}
-        </style>
-    </head>
-    <body>
-    	<h1> ToDO List</h1>
-    	<div ng-controller="todoCtl">
-    		<form name="addFrm" ng-submit="addnewTodo()">
-    			<input type="textbox" value="" placeholder="input new to do " ng-model="newTodo" required >
-    			<button ng-disabled="addFrm.$invalid">Go</button>
-    		</form>
-    		<button ng-click="clearDone()">Clear Done</button>
-    		<ul>
-    			<li ng-repeat="todo in todos">
-    				<input type="checkbox" value="" ng-model="todo.done">
-    				<span ng-class="{'done':todo.done}">
-    					{{ todo.title }}
-    				</span>
-    			</li>
-    		</ul>
-    	</div>
-		
-        <script src="./lib/angular.js"></script>
-        <script>
-        /**
-        *  Module
-        *
-        * Description
-        */
-        angular.module('TODO', []).controller('todoCtl', ['$scope', function($scope){
-        	$scope.todos=[
-        		{'title':'Build a todo app','done':false,'time':new Date()}
-        	];
-        	$scope.addnewTodo = function(){
-        		$scope.todos.push({'title':$scope.newTodo,'done':false,'time':new Date()});
-        		$scope.newTodo='';
-        	};
-        	$scope.clearDone = function(){
-        		$scope.todos = $scope.todos.filter(function(todo){
-        			return 	!todo.done;
-        		});
-        	};
-        }])
-        </script>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Task Manager</title>
+    <link rel="stylesheet" href="lib/bootstrap.css">
+    <link rel="author" href="humans.txt">
+    <style type="text/css">
+    .strike{
+    	text-decoration: line-through
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container" ng-controller="todoCtl">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3 class="text-center">
+                    My Task Manager
+                    <a class="btn btn-success btn-xs" title="Add a new task" ng-click="showAddTask()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </h3>
+
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                Priority
+                            </th>
+                            <th>
+                                Task
+                            </th>
+                            <th>
+                                Add Date
+                            </th>
+                            <th>
+                                Task Description
+                            </th>
+                            <th>
+                            	Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat='task in todoTasks'>
+                        <tr class='warning'>
+                            <td ng-class="{strike: task.done}">
+                                {{ task.priority}}
+                            </td>
+                            <td ng-class="{strike: task.done}">
+                                {{ task.name}}
+                            </td>
+                            <td ng-class="{strike: task.done}">
+                                {{ task.date}}
+                            </td>
+                            <td ng-class="{strike: task.done}">
+                                {{ task.description}}
+                            </td>
+                            <td>
+								<button type="button" class="btn btn-info btn-sm" ng-click="checkTask(task)" title="<% todo.done ? 'Mark as unfinished task' : 'Mark as finished task' %>">
+									<span class="glyphicon glyphicon-ok"></span>
+								</button>     								
+								<!-- <button type="button" class="btn btn-warning btn-sm" ng-class="{disabled: todo.done}" ng-click="editTask(task)" title="Edit task">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>    	 -->							
+								<button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask(task)" title="Delete task">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="row clearfix" ng-show="showAdd">
+
+                    <div class="col-md-4 column col-md-offset-4">
+                        <!-- Todo: every item should have validate 
+					-->
+                        <form name='todoFrm' accept-charset="utf-8" novalidate>
+                            <div class="form-group">
+                                <h3 class="text-center">
+                                    Add New Task
+                                    <button class="btn btn-danger" ng-click="hideAddTask()" aria-label="Remove">-</button>
+                                </h3>
+                            </div>
+                            <div class="alert alert-danger text-center" ng-if="todoFrm.$invalid && todoFrm.$dirty">
+                                <strong>Oops!!!</strong>Please enter a valid new task
+                            </div>
+                            <div class="alert alert-success text-center" ng-if="todoFrm.$valid">
+                                <strong>Great!!!</strong>Now you can add your new task
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Task</label>
+                                <input type="text" name="name" placeholder="Enter a task name" class="form-control input-lg" ng-model="name" ng-minlength="1" required>
+                                <span class="help-block" ng-if="todoForm.name.$invalid && todoForm.name.$dirty">Please enter a valid task's name</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Task description</label>
+                                <textarea type="text" name="description" placeholder="Enter a task description" class="form-control textarea input-lg" ng-model="description" ng-required="true" ng-minlength="1"></textarea>
+                                <span class="help-block" ng-if="todoForm.description.$invalid && todoForm.description.$dirty">Please enter a valid task's description</span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-block btn-success" ng-click="addTask()" ng-disable="todoFrm.$invalid">Add Task
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./lib/angular.js"></script>
+    <script src="./lib/angular-resource.js"></script>
+    <script src="./lib/angular-mongolab.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+
 </html>
