@@ -6,11 +6,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Task Manager</title>
-    <link rel="stylesheet" href="bower_components/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="author" href="humans.txt">
     <style type="text/css">
-    .strike{
-    	text-decoration: line-through
+    .strike {
+        text-decoration: line-through
     }
     </style>
 </head>
@@ -42,7 +42,7 @@
                                 Task Description
                             </th>
                             <th>
-                            	Action
+                                Action
                             </th>
                         </tr>
                     </thead>
@@ -61,16 +61,16 @@
                                 {{ task.description}}
                             </td>
                             <td>
-								<button type="button" class="btn btn-info btn-sm" ng-click="checkTask(task)" title="<% todo.done ? 'Mark as unfinished task' : 'Mark as finished task' %>">
-									<span class="glyphicon glyphicon-ok"></span>
-								</button>     								
-								<!-- <button type="button" class="btn btn-warning btn-sm" ng-class="{disabled: todo.done}" ng-click="editTask(task)" title="Edit task">
-									<span class="glyphicon glyphicon-pencil"></span>
-								</button>    	 -->							
-								<button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask(task)" title="Delete task">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-							</td>
+                                <button type="button" class="btn btn-info btn-sm" ng-click="checkTask(task)" title="<% todo.done ? 'Mark as unfinished task' : 'Mark as finished task' %>">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <!-- <button type="button" class="btn btn-warning btn-sm" ng-class="{disabled: todo.done}" ng-click="editTask(task)" title="Edit task">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>        -->
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask(task)" title="Delete task">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
                         </tr>
 
                     </tbody>
@@ -79,7 +79,7 @@
 
                     <div class="col-md-4 column col-md-offset-4">
                         <!-- Todo: every item should have validate 
-					-->
+                    -->
                         <form name='todoFrm' accept-charset="utf-8" novalidate>
                             <div class="form-group">
                                 <h3 class="text-center">
@@ -117,8 +117,8 @@
             </div>
         </div>
     </div>
-    <script src="./bower_components/angular.js"></script>
-    <script src="./bower_components/angular-mongolab.js"></script>
+    <script src="./bower_components/angularjs/angular.min.js"></script>
+    <script src="./bower_components/angularjs-mongolab/src/angular-mongolab.js"></script>
     <script src="./scripts/app.js"></script>
 </body>
 

@@ -3,7 +3,7 @@
  *
  * Description
  */
-angular.module('TODO', [, 'mongolabResourceHttp'])
+angular.module('TODO', ['mongolabResourceHttp'])
     .constant('MONGOLAB_CONFIG', {
         API_KEY: '3yhw0fVhiNurNsxN3EYtqs0ogQBdC0ND',
         DB_NAME: 'chopper_mongo'
