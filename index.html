@@ -46,7 +46,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody ng-repeat='task in todoTasks'>
+                    <tbody ng-repeat='task in todoTasks'  ng-cloak >
                         <tr class='warning'>
                             <td ng-class="{strike: task.done}">
                                 {{ task.priority}}
